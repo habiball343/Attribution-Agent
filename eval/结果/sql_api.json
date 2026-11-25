@@ -1,0 +1,118 @@
+{
+ "mode": "api",
+ "model": "通用大模型（DeepSeek）",
+ "accuracy": 0.8,
+ "n": 10,
+ "rows": [
+  {
+   "id": "e1",
+   "db": "ecommerce",
+   "question": "9 月各渠道的 GMV 和订单数",
+   "correct": true,
+   "type": "sql",
+   "sql": "SELECT c.channel_name, SUM(o.pay_amount) AS gmv, COUNT(o.order_id) AS order_cnt FROM fact_orders o JOIN dim_channel c ON o.channel_id = c.channel_id WHERE o.dt >= '2026-09-01' AND o.dt <= '2026-09-30' GROUP BY c.channel_name ORDER BY gmv DESC",
+   "error": null,
+   "repaired": false,
+   "seconds": 2.0
+  },
+  {
+   "id": "e2",
+   "db": "ecommerce",
+   "question": "列出 9 月各区域的 GMV 和订单数",
+   "correct": true,
+   "type": "sql",
+   "sql": "SELECT r.region_name, SUM(o.pay_amount) AS gmv, COUNT(o.order_id) AS order_cnt FROM fact_orders o JOIN dim_region r ON o.region_id = r.region_id WHERE o.dt >= '2026-09-01' AND o.dt <= '2026-09-30' GROUP BY r.region_name ORDER BY gmv DESC",
+   "error": null,
+   "repaired": false,
+   "seconds": 1.43
+  },
+  {
+   "id": "e3",
+   "db": "ecommerce",
+   "question": "9 月信息流广告每天的访客数",
+   "correct": true,
+   "type": "sql",
+   "sql": "SELECT t.dt, t.uv FROM fact_traffic_daily t JOIN dim_channel c ON t.channel_id = c.channel_id WHERE c.channel_name = '信息流广告' AND t.dt BETWEEN '2026-09-01' AND '2026-09-30' ORDER BY t.dt",
+   "error": null,
+   "repaired": false,
+   "seconds": 1.31
+  },
+  {
+   "id": "e4",
+   "db": "ecommerce",
+   "question": "9 月家电类目 GMV 最高的 5 个商品",
+   "correct": true,
+   "type": "sql",
+   "sql": "SELECT p.product_id, p.product_name, SUM(oi.pay_amount) AS gmv FROM fact_order_items oi JOIN fact_orders o ON oi.order_id = o.order_id JOIN dim_product p ON oi.product_id = p.product_id JOIN dim_category c ON p.category_id = c.category_id WHERE c.category_name = '家电' AND o.dt >= '2026-09-01' AND o.dt <= '2026-09-30' GROUP BY p.product_id, p.product_name ORDER BY gmv DESC LIMIT 5",
+   "error": null,
+   "repaired": false,
+   "seconds": 1.27
+  },
+  {
+   "id": "e5",
+   "db": "ecommerce",
+   "question": "8 月和 9 月的支付转化率分别是多少",
+   "correct": false,
+   "type": "sql",
+   "sql": "SELECT strftime('%Y-%m', o.dt) AS month, COUNT(o.order_id) * 1.0 / SUM(t.uv) AS pay_conversion_rate FROM fact_orders o JOIN (SELECT dt, SUM(uv) AS uv FROM fact_traffic_daily GROUP BY dt) t ON o.dt = t.dt WHERE o.dt >= '2026-08-01' AND o.dt < '2026-10-01' GROUP BY strftime('%Y-%m', o.dt) ORDER BY month",
+   "error": null,
+   "repaired": false,
+   "seconds": 1.46
+  },
+  {
+   "id": "e6",
+   "db": "ecommerce",
+   "question": "9 月新客订单占比是多少",
+   "correct": true,
+   "type": "sql",
+   "sql": "SELECT SUM(CASE WHEN is_new_user = 1 THEN 1 ELSE 0 END) * 1.0 / COUNT(order_id) AS new_user_order_ratio FROM fact_orders WHERE dt >= '2026-09-01' AND dt <= '2026-09-30'",
+   "error": null,
+   "repaired": false,
+   "seconds": 1.21
+  },
+  {
+   "id": "f1",
+   "db": "fmcg",
+   "question": "9 月各渠道的营收和佣金分别是多少",
+   "correct": false,
+   "type": "sql",
+   "sql": "SELECT c.channel_name, SUM(s.net_revenue) AS revenue, SUM(cm.commission_amount) AS commission FROM fact_sales_daily s JOIN dim_channel c ON c.channel_id = s.channel_id LEFT JOIN fact_commission_monthly cm ON cm.channel_id = s.channel_id AND cm.month = '2026-09' WHERE s.dt >= '2026-09-01' AND s.dt <= '2026-09-30' GROUP BY c.channel_name",
+   "error": null,
+   "repaired": false,
+   "seconds": 1.44
+  },
+  {
+   "id": "f2",
+   "db": "fmcg",
+   "question": "9 月各产品线的营收和毛利率",
+   "correct": true,
+   "type": "sql",
+   "sql": "WITH s AS (SELECT d.product_line, SUM(f.net_revenue) AS revenue, SUM(f.sales_qty * c.unit_cogs) AS cogs FROM fact_sales_daily f JOIN dim_sku d ON f.sku_id = d.sku_id JOIN fact_sku_cost_monthly c ON f.sku_id = c.sku_id AND c.month = substr(f.dt, 1, 7) WHERE f.dt >= '2026-09-01' AND f.dt <= '2026-09-30' GROUP BY d.product_line) SELECT product_line, revenue, (revenue - cogs) / revenue AS gross_margin_rate FROM s ORDER BY product_line",
+   "error": null,
+   "repaired": false,
+   "seconds": 2.11
+  },
+  {
+   "id": "f3",
+   "db": "fmcg",
+   "question": "6 月到 9 月每个月的净利率",
+   "correct": true,
+   "type": "sql",
+   "sql": "WITH sales AS (SELECT substr(dt,1,7) AS month, SUM(net_revenue) AS revenue FROM fact_sales_daily WHERE dt >= '2026-06-01' AND dt <= '2026-09-30' GROUP BY substr(dt,1,7)), cogs AS (SELECT substr(f.dt,1,7) AS month, SUM(f.sales_qty * c.unit_cogs) AS product_cost FROM fact_sales_daily f JOIN fact_sku_cost_monthly c ON f.sku_id = c.sku_id AND substr(f.dt,1,7) = c.month WHERE f.dt >= '2026-06-01' AND f.dt <= '2026-09-30' GROUP BY substr(f.dt,1,7)), logistics AS (SELECT substr(dt,1,7) AS month, SUM(logistics_cost) AS logistics_cost FROM fact_logistics_daily WHERE dt >= '2026-06-01' AND dt <= '2026-09-30' GROUP BY substr(dt,1,7)), commission AS (SELECT month, SUM(commission_amount) AS commission_amount FROM fact_commission_monthly WHERE month >= '2026-06' AND month <= '2026-09' GROUP BY month), marketing AS (SELECT month, SUM(amount) AS marketing_amount FROM fact_marketing_monthly WHERE month >= '2026-06' AND month <= '2026-09' GROUP BY month) SELECT s.month, (s.revenue - COALESCE(c.product_cost,0) - COALESCE(l.logistics_cost,0) - COALESCE(cm.commission_amount,0) - COALESCE(m.marketing_amount,0)) / s.revenue AS net_margin FROM sales s LEFT JOIN cogs c ON s.month = c.month LEFT JOIN logistics l ON s.month = l.month LEFT JOIN commission cm ON s.month = cm.month LEFT JOIN marketing m ON s.month = m.month ORDER BY s.month;",
+   "error": null,
+   "repaired": false,
+   "seconds": 2.24
+  },
+  {
+   "id": "f4",
+   "db": "fmcg",
+   "question": "9 月社区团购渠道的折扣率",
+   "correct": true,
+   "type": "sql",
+   "sql": "SELECT SUM(discount_amount) * 1.0 / SUM(gross_amount) AS discount_rate FROM fact_sales_daily s JOIN dim_channel c ON s.channel_id = c.channel_id WHERE c.channel_name = '社区团购' AND s.dt >= '2026-09-01' AND s.dt <= '2026-09-30'",
+   "error": null,
+   "repaired": false,
+   "seconds": 1.34
+  }
+ ]
+}

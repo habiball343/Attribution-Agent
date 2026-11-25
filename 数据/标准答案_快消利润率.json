@@ -1,0 +1,137 @@
+{
+ "scenario": "快消品利润率异动归因",
+ "database": "fmcg.db",
+ "question": "禾悦食品 2026 年 9 月净利率比 6 月下降了多少个百分点？为什么？",
+ "metric": "净利率 =（营收 − 产品成本 − 物流费用 − 渠道佣金 − 营销费用）÷ 营收，贡献利润口径，未分摊管理费用和税费",
+ "base_period": "2026-06",
+ "current_period": "2026-09",
+ "actual": {
+  "jun": {
+   "revenue": 2565136.16,
+   "cogs_rate": 0.565237,
+   "logistics_rate": 0.066344,
+   "commission_rate": 0.026685,
+   "marketing_rate": 0.047522,
+   "gross_margin": 0.434763,
+   "net_margin": 0.294212
+  },
+  "sep": {
+   "revenue": 2933221.0,
+   "cogs_rate": 0.606175,
+   "logistics_rate": 0.061897,
+   "commission_rate": 0.04224,
+   "marketing_rate": 0.044422,
+   "gross_margin": 0.393825,
+   "net_margin": 0.245266
+  },
+  "net_margin_change_pp": -4.895,
+  "gross_margin_change_pp": -4.094
+ },
+ "reference_decomposition": {
+  "method": "加法分解：净利率 = 1 − 产品成本率 − 物流费用率 − 佣金率 − 营销费用率，各项费用率变化之和等于净利率变化（单位：百分点）",
+  "cogs_rate": -4.094,
+  "logistics_rate": 0.445,
+  "commission_rate": -1.555,
+  "marketing_rate": 0.31,
+  "total": -4.895
+ },
+ "root_causes": [
+  {
+   "id": "C3",
+   "name": "社区团购渠道扩张",
+   "type": "渠道结构",
+   "rank": "主要",
+   "mechanism": "7 月 15 日起社区团购销量快速增长，营收占比从约 6% 升到约 14%；该渠道供货折扣 35%、佣金 12%、每件配送成本 0.6 元，利润率远低于其他渠道，结构变化拉低整体利润率",
+   "evidence": [
+    "fact_sales_daily 按渠道的营收占比变化",
+    "dim_channel.base_discount_rate、dim_channel_commission、fact_logistics_daily",
+    "event_calendar 中 FE03"
+   ],
+   "true_impact_net_pp": -3.012,
+   "true_impact_gross_pp": -1.744
+  },
+  {
+   "id": "C4",
+   "name": "中秋促销让利",
+   "type": "价格",
+   "rank": "主要",
+   "mechanism": "9 月 10 日至 25 日坚果零食线（批发除外）额外让利 12%，礼盒主推，折扣率上升、毛利率下降",
+   "evidence": [
+    "fact_sales_daily 中坚果零食线 9 月折扣率明显上升",
+    "event_calendar 中 FE07"
+   ],
+   "true_impact_net_pp": -1.503,
+   "true_impact_gross_pp": -1.4
+  },
+  {
+   "id": "C1",
+   "name": "白砂糖采购价上涨 50%",
+   "type": "成本",
+   "rank": "主要",
+   "mechanism": "7 月起白砂糖单价由约 6 元/kg 涨到约 9 元/kg，含糖饮料和部分零食的单位成本上升",
+   "evidence": [
+    "fact_material_price_monthly 中 M01",
+    "bom 中各 SKU 的白砂糖用量",
+    "fact_sku_cost_monthly 的单位成本变化",
+    "event_calendar 中 FE02"
+   ],
+   "true_impact_net_pp": -1.385,
+   "true_impact_gross_pp": -1.385
+  },
+  {
+   "id": "C2",
+   "name": "内容电商平台佣金上调",
+   "type": "渠道费用",
+   "rank": "次要",
+   "mechanism": "8 月 1 日起内容电商平台佣金率由 5% 调到 10%，只影响净利率，不影响毛利率",
+   "evidence": [
+    "dim_channel_commission 中 F02 的费率变化",
+    "fact_commission_monthly",
+    "event_calendar 中 FE05"
+   ],
+   "true_impact_net_pp": -0.864,
+   "true_impact_gross_pp": 0.0
+  },
+  {
+   "id": "C5",
+   "name": "6 月 618 大促压低基期利润率",
+   "type": "基期效应（营销日历）",
+   "rank": "反向因素",
+   "mechanism": "6 月 1 日至 18 日电商渠道额外让利 8%，6 月利润率本身偏低；它让“9 月对比 6 月”的降幅看起来比实际小",
+   "evidence": [
+    "event_calendar 中 FE01",
+    "6 月上半月电商渠道折扣率偏高"
+   ],
+   "true_impact_net_pp": 2.196,
+   "true_impact_gross_pp": 1.359
+  }
+ ],
+ "other_effects": {
+  "description": "饮料季节性导致的产品线结构变化、自然增长和随机波动",
+  "impact_net_pp": -0.327
+ },
+ "red_herrings": [
+  {
+   "id": "R1",
+   "name": "华南物流服务商更换（8/1）",
+   "why": "合同单价不变；物流费用率 9 月反而低于 6 月。物流总额上升是销量增长所致",
+   "check": "看物流费用率（物流费用 ÷ 营收）或分渠道每件物流成本，而不是物流费用总额"
+  },
+  {
+   "id": "R2",
+   "name": "轻甜气泡水新品上市（9/5）",
+   "why": "新品利润率与同线产品接近，营收占比很小，对整体利润率影响可以忽略",
+   "check": "计算新品营收占比和单品利润率"
+  }
+ ],
+ "derived_phenomena": [
+  {
+   "name": "平均每件物流成本上升",
+   "explanation": "社区团购每件配送成本最高，其占比上升拉高了平均每件物流成本，属于 C3 的派生现象，不是物流涨价"
+  },
+  {
+   "name": "电商渠道营收占比下降",
+   "explanation": "社区团购增长后其他渠道占比被动下降，并非电商渠道本身变差"
+  }
+ ]
+}

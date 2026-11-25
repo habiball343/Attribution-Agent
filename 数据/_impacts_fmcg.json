@@ -1,0 +1,208 @@
+{
+ "jun": {
+  "revenue": 2565135.51,
+  "cogs": 1449909.13,
+  "logistics": 170182.16,
+  "commission": 68451.15,
+  "marketing": 121900.0,
+  "gross_margin": 0.434763,
+  "net_margin": 0.294212
+ },
+ "sep": {
+  "revenue": 2933220.43,
+  "cogs": 1778045.24,
+  "logistics": 181557.13,
+  "commission": 123898.09,
+  "marketing": 130300.0,
+  "gross_margin": 0.393825,
+  "net_margin": 0.245266
+ },
+ "causes": {
+  "C1_白砂糖涨价": {
+   "net_margin_pp": -1.385,
+   "gross_margin_pp": -1.385,
+   "jun_without": {
+    "revenue": 2565135.51,
+    "cogs": 1449909.13,
+    "logistics": 170182.16,
+    "commission": 68451.15,
+    "marketing": 121900.0,
+    "gross_margin": 0.434763,
+    "net_margin": 0.294212
+   },
+   "sep_without": {
+    "revenue": 2933220.43,
+    "cogs": 1737418.06,
+    "logistics": 181557.13,
+    "commission": 123898.09,
+    "marketing": 130300.0,
+    "gross_margin": 0.407676,
+    "net_margin": 0.259117
+   }
+  },
+  "C2_内容电商佣金上调": {
+   "net_margin_pp": -0.864,
+   "gross_margin_pp": 0.0,
+   "jun_without": {
+    "revenue": 2565135.51,
+    "cogs": 1449909.13,
+    "logistics": 170182.16,
+    "commission": 68451.15,
+    "marketing": 121900.0,
+    "gross_margin": 0.434763,
+    "net_margin": 0.294212
+   },
+   "sep_without": {
+    "revenue": 2933220.43,
+    "cogs": 1778045.24,
+    "logistics": 181557.13,
+    "commission": 98549.79,
+    "marketing": 130300.0,
+    "gross_margin": 0.393825,
+    "net_margin": 0.253908
+   }
+  },
+  "C3_社区团购扩张": {
+   "net_margin_pp": -3.012,
+   "gross_margin_pp": -1.744,
+   "jun_without": {
+    "revenue": 2565135.51,
+    "cogs": 1449909.13,
+    "logistics": 170182.16,
+    "commission": 68451.15,
+    "marketing": 121900.0,
+    "gross_margin": 0.434763,
+    "net_margin": 0.294212
+   },
+   "sep_without": {
+    "revenue": 2680046.89,
+    "cogs": 1577838.49,
+    "logistics": 147935.81,
+    "commission": 93517.26,
+    "marketing": 122700.0,
+    "gross_margin": 0.411265,
+    "net_margin": 0.275389
+   }
+  },
+  "C4_中秋促销让利": {
+   "net_margin_pp": -1.503,
+   "gross_margin_pp": -1.4,
+   "jun_without": {
+    "revenue": 2565135.51,
+    "cogs": 1449909.13,
+    "logistics": 170182.16,
+    "commission": 68451.15,
+    "marketing": 121900.0,
+    "gross_margin": 0.434763,
+    "net_margin": 0.294212
+   },
+   "sep_without": {
+    "revenue": 3002547.38,
+    "cogs": 1778045.24,
+    "logistics": 181557.13,
+    "commission": 127699.86,
+    "marketing": 133700.0,
+    "gross_margin": 0.407821,
+    "net_margin": 0.260294
+   }
+  },
+  "C5_618大促基数": {
+   "net_margin_pp": 2.196,
+   "gross_margin_pp": 1.359,
+   "jun_without": {
+    "revenue": 2359946.81,
+    "cogs": 1301847.96,
+    "logistics": 145849.82,
+    "commission": 59289.96,
+    "marketing": 106800.0,
+    "gross_margin": 0.448357,
+    "net_margin": 0.316176
+   },
+   "sep_without": {
+    "revenue": 2933220.43,
+    "cogs": 1778045.24,
+    "logistics": 181557.13,
+    "commission": 123898.09,
+    "marketing": 130300.0,
+    "gross_margin": 0.393825,
+    "net_margin": 0.245266
+   }
+  }
+ },
+ "no_causes": {
+  "jun": {
+   "revenue": 2359946.81,
+   "cogs": 1301847.96,
+   "logistics": 145849.82,
+   "commission": 59289.96,
+   "marketing": 106800.0,
+   "gross_margin": 0.448357,
+   "net_margin": 0.316176
+  },
+  "sep": {
+   "revenue": 2739947.13,
+   "cogs": 1541653.99,
+   "logistics": 147935.81,
+   "commission": 70154.0,
+   "marketing": 125800.0,
+   "gross_margin": 0.437342,
+   "net_margin": 0.311832
+  }
+ },
+ "monthly": {
+  "2026-04": {
+   "revenue": 2039267.67,
+   "cogs": 1110521.31,
+   "logistics": 118393.8,
+   "commission": 51295.65,
+   "marketing": 92400.0,
+   "gross_margin": 0.455431,
+   "net_margin": 0.32691
+  },
+  "2026-05": {
+   "revenue": 2247650.44,
+   "cogs": 1233067.21,
+   "logistics": 134469.98,
+   "commission": 56613.21,
+   "marketing": 101700.0,
+   "gross_margin": 0.451397,
+   "net_margin": 0.321135
+  },
+  "2026-06": {
+   "revenue": 2565135.51,
+   "cogs": 1449909.13,
+   "logistics": 170182.16,
+   "commission": 68451.15,
+   "marketing": 121900.0,
+   "gross_margin": 0.434763,
+   "net_margin": 0.294212
+  },
+  "2026-07": {
+   "revenue": 2622949.88,
+   "cogs": 1496166.14,
+   "logistics": 167496.07,
+   "commission": 67715.16,
+   "marketing": 118400.0,
+   "gross_margin": 0.429586,
+   "net_margin": 0.294772
+  },
+  "2026-08": {
+   "revenue": 2769951.4,
+   "cogs": 1600608.13,
+   "logistics": 183632.91,
+   "commission": 107196.73,
+   "marketing": 123300.0,
+   "gross_margin": 0.422153,
+   "net_margin": 0.272645
+  },
+  "2026-09": {
+   "revenue": 2933220.43,
+   "cogs": 1778045.24,
+   "logistics": 181557.13,
+   "commission": 123898.09,
+   "marketing": 130300.0,
+   "gross_margin": 0.393825,
+   "net_margin": 0.245266
+  }
+ }
+}
